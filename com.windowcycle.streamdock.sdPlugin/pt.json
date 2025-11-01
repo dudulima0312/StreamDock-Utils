@@ -1,0 +1,11 @@
+{
+  "Name": "Alternar Janelas",
+  "Description": "Navegue entre janelas abertas usando Task View (Alt+Tab) girando o knob",
+  "Category": "Gerenciamento de Janelas",
+  "Actions": {
+    "windowcycle": {
+      "Name": "Alternar Janelas",
+      "Tooltip": "Gire o knob para abrir o Task View e navegar entre janelas"
+    }
+  }
+}

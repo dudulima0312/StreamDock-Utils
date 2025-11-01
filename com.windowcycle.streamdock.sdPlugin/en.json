@@ -1,0 +1,11 @@
+{
+  "Name": "Window Cycle",
+  "Description": "Navigate through open windows using Task View (Alt+Tab) with knob rotation",
+  "Category": "Window Management",
+  "Actions": {
+    "windowcycle": {
+      "Name": "Window Cycle",
+      "Tooltip": "Rotate knob to open Task View and navigate between windows"
+    }
+  }
+}

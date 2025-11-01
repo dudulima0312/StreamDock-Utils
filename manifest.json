@@ -1,0 +1,58 @@
+{
+  "Actions": [
+    {
+      "UUID": "com.windowcycle.streamdock.windowcycle",
+      "Icon": "static/img/window-icon.png",
+      "state": 0,
+      "States": [
+        {
+          "TitleAlignment": "bottom",
+          "FontSize": "11",
+          "Image": "static/img/window-icon.png"
+        },
+        {
+          "TitleAlignment": "bottom",
+          "FontSize": "11",
+          "Image": "static/img/window-icon-active.png"
+        }
+      ],
+      "Settings": {
+        "rotationSensitivity": 1,
+        "autoReleaseDelay": 1.5,
+        "reverseDirection": false,
+        "enableKnobPress": true
+      },
+      "UserTitleEnabled": true,
+      "SupportedInMultiActions": true,
+      "Controllers": [
+        "Keypad",
+        "Knob"
+      ],
+      "Name": "Window Cycle",
+      "Tooltip": "Cycle through open windows",
+      "PropertyInspectorPath": "./propertyInspector/windowcycle/index.html"
+    }
+  ],
+  "Version": "1.0.0",
+  "Name": "Window Cycle",
+  "Icon": "static/img/window-icon.png",
+  "CategoryIcon": "static/img/window-icon.png",
+  "Category": "Window Management",
+  "Description": "Quickly switch between open windows with a single button press",
+  "CodePath": "WindowCycle.exe",
+  "CodePathWin": "WindowCycle.exe",
+  "CodePathMac": "WindowCycle",
+  "SDKVersion": 1,
+  "Author": "MiraBox Community",
+  "URL": "https://github.com/yourusername/windowcycle",
+  "OS": [
+    {
+      "Platform": "mac",
+      "MinimumVersion": "10.11"
+    },
+    {
+      "Platform": "windows",
+      "MinimumVersion": "7"
+    }
+  ]
+}

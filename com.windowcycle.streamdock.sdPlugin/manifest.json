@@ -1,0 +1,63 @@
+{
+  "Category": "Dudu Lima System",
+  "CategoryIcon": "static/img/category-icon",
+  "Actions": [
+    {
+      "UUID": "com.windowcycle.streamdock.windowcycle",
+      "Icon": "static/img/window-icon",
+      "Name": "Window Cycle",
+      "Tooltip": "Cycle through open windows with Task View",
+      "States": [
+        {
+          "Image": "static/img/window-icon"
+        }
+      ],
+      "Controllers": ["Keypad", "Knob"],
+      "PropertyInspectorPath": "propertyInspector/windowcycle/index.html"
+    },
+    {
+      "UUID": "com.windowcycle.streamdock.clock",
+      "Icon": "static/img/clock-icon",
+      "Name": "Clock",
+      "Tooltip": "Customizable clock display",
+      "States": [
+        {
+          "Image": "static/img/clock-icon"
+        }
+      ],
+      "Controllers": ["Keypad"],
+      "PropertyInspectorPath": "propertyInspector/clock/index.html"
+    },
+    {
+      "UUID": "com.windowcycle.streamdock.webhook_knob",
+      "Icon": "static/img/webhook-icon",
+      "Name": "Webhook Knob",
+      "Tooltip": "Trigger webhooks on knob rotation and press",
+      "States": [
+        {
+          "Image": "static/img/webhook-icon"
+        }
+      ],
+      "Controllers": ["Knob"],
+      "PropertyInspectorPath": "propertyInspector/webhook_knob/index.html"
+    }
+  ],
+  "SDKVersion": 1,
+  "Author": "Dudu Lima",
+  "Description": "Navigate through open windows using Task View (Alt+Tab) with knob rotation",
+  "Name": "Window Cycle",
+  "Icon": "static/img/window-icon",
+  "CodePath": "WindowCycle.exe",
+  "CodePathWin": "WindowCycle.exe",
+  "URL": "https://github.com/dudulima/windowcycle",
+  "Version": "1.1.0",
+  "OS": [
+    {
+      "Platform": "windows",
+      "MinimumVersion": "10"
+    }
+  ],
+  "Software": {
+    "MinimumVersion": "2.9"
+  }
+}

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Window Cycle Settings</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 13px;
+            background: #2D3142;
+            color: #D8D8D8;
+            margin: 0;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 300px;
+        }
+
+        .setting-group {
+            margin-bottom: 15px;
+            background: #3E4255;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #9CA0AA;
+        }
+
+        select, input[type="number"], input[type="range"] {
+            width: 100%;
+            padding: 5px 8px;
+            background: #2D3142;
+            border: 1px solid #4A5066;
+            border-radius: 3px;
+            color: #D8D8D8;
+            font-size: 12px;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #5865F2;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+
+        .info-text {
+            font-size: 11px;
+            color: #9CA0AA;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+
+        .range-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .range-value {
+            min-width: 30px;
+            color: #5865F2;
+            font-weight: 500;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+
+        .status-active {
+            background: #43B581;
+            animation: pulse 2s infinite;
+        }
+
+        .status-inactive {
+            background: #747F8D;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .warning {
+            background: #FAA81A;
+            color: #2D3142;
+            padding: 8px;
+            border-radius: 3px;
+            margin-top: 10px;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="setting-group">
+            <h3>
+                Knob Control
+                <span id="statusIndicator" class="status-indicator status-inactive"></span>
+            </h3>
+
+            <label for="rotationSensitivity">Rotation Sensitivity:</label>
+            <div class="range-container">
+                <input type="range" id="rotationSensitivity" min="1" max="5" value="1">
+                <span class="range-value" id="sensitivityValue">1</span>
+            </div>
+            <div class="info-text">How many ticks to navigate (1 = most sensitive)</div>
+
+            <label for="autoReleaseDelay" style="margin-top: 10px;">Auto-release Delay (seconds):</label>
+            <div class="range-container">
+                <input type="range" id="autoReleaseDelay" min="0.5" max="5" step="0.5" value="1.5">
+                <span class="range-value" id="delayValue">1.5s</span>
+            </div>
+            <div class="info-text">Time before Task View closes automatically</div>
+        </div>
+
+        <div class="setting-group">
+            <h3>Navigation Options</h3>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="reverseDirection">
+                <label for="reverseDirection">Reverse rotation direction</label>
+            </div>
+            <div class="info-text">Inverts the knob rotation direction</div>
+
+            <div class="checkbox-group" style="margin-top: 10px;">
+                <input type="checkbox" id="enableKnobPress" checked>
+                <label for="enableKnobPress">Press knob to select window</label>
+            </div>
+            <div class="info-text">Press the knob to confirm window selection</div>
+        </div>
+
+        <div class="setting-group">
+            <h3>How to Use</h3>
+            <div style="font-size: 11px; line-height: 1.5;">
+                <p style="margin: 5px 0;">
+                    <strong>With Knob:</strong><br>
+                    • Rotate to open Task View and navigate<br>
+                    • Press to select current window<br>
+                    • Stop rotating to auto-select after delay
+                </p>
+                <p style="margin: 5px 0;">
+                    <strong>With Button:</strong><br>
+                    • Press to open Task View<br>
+                    • Press again to navigate<br>
+                    • Wait for auto-select or press knob
+                </p>
+            </div>
+        </div>
+
+        <div class="warning">
+            <strong>Note:</strong> This plugin simulates keyboard shortcuts (Alt+Tab). Make sure StreamDock has proper permissions to send keyboard inputs.
+        </div>
+    </div>
+
+    <script>
+        // Connect to Stream Deck
+        var websocket = null;
+        var pluginUUID = null;
+        var settings = {};
+
+        function connectElgatoStreamDeckSocket(inPort, inPluginUUID, inRegisterEvent, inInfo, inActionInfo) {
+            pluginUUID = inPluginUUID;
+
+            // Parse action info
+            if (inActionInfo) {
+                var actionInfo = JSON.parse(inActionInfo);
+                settings = actionInfo.payload.settings || {};
+                updateUI();
+            }
+
+            // Create WebSocket connection
+            websocket = new WebSocket('ws://127.0.0.1:' + inPort);
+
+            websocket.onopen = function() {
+                // Register property inspector
+                var json = {
+                    "event": inRegisterEvent,
+                    "uuid": inPluginUUID
+                };
+                websocket.send(JSON.stringify(json));
+
+                // Request settings
+                requestSettings();
+            };
+
+            websocket.onmessage = function(evt) {
+                var jsonObj = JSON.parse(evt.data);
+                var event = jsonObj.event;
+                var payload = jsonObj.payload || {};
+
+                if (event === 'sendToPropertyInspector') {
+                    // Update settings
+                    if (payload.rotationSensitivity !== undefined ||
+                        payload.autoReleaseDelay !== undefined ||
+                        payload.reverseDirection !== undefined ||
+                        payload.enableKnobPress !== undefined) {
+                        settings = Object.assign(settings, payload);
+                        updateUI();
+                    }
+
+                    // Update status indicator
+                    if (payload.taskViewActive !== undefined) {
+                        var indicator = document.getElementById('statusIndicator');
+                        if (payload.taskViewActive) {
+                            indicator.className = 'status-indicator status-active';
+                        } else {
+                            indicator.className = 'status-indicator status-inactive';
+                        }
+                    }
+                }
+            };
+        }
+
+        function updateUI() {
+            if (settings.rotationSensitivity !== undefined) {
+                document.getElementById('rotationSensitivity').value = settings.rotationSensitivity;
+                document.getElementById('sensitivityValue').innerText = settings.rotationSensitivity;
+            }
+            if (settings.autoReleaseDelay !== undefined) {
+                document.getElementById('autoReleaseDelay').value = settings.autoReleaseDelay;
+                document.getElementById('delayValue').innerText = settings.autoReleaseDelay + 's';
+            }
+            if (settings.reverseDirection !== undefined) {
+                document.getElementById('reverseDirection').checked = settings.reverseDirection;
+            }
+            if (settings.enableKnobPress !== undefined) {
+                document.getElementById('enableKnobPress').checked = settings.enableKnobPress;
+            }
+        }
+
+        function saveSettings() {
+            settings.rotationSensitivity = parseInt(document.getElementById('rotationSensitivity').value);
+            settings.autoReleaseDelay = parseFloat(document.getElementById('autoReleaseDelay').value);
+            settings.reverseDirection = document.getElementById('reverseDirection').checked;
+            settings.enableKnobPress = document.getElementById('enableKnobPress').checked;
+
+            if (websocket && websocket.readyState === WebSocket.OPEN) {
+                var json = {
+                    "event": "setSettings",
+                    "context": pluginUUID,
+                    "payload": settings
+                };
+                websocket.send(JSON.stringify(json));
+            }
+        }
+
+        function requestSettings() {
+            if (websocket && websocket.readyState === WebSocket.OPEN) {
+                var json = {
+                    "event": "getSettings",
+                    "context": pluginUUID
+                };
+                websocket.send(JSON.stringify(json));
+            }
+        }
+
+        // Add event listeners
+        document.getElementById('rotationSensitivity').addEventListener('input', function(e) {
+            document.getElementById('sensitivityValue').innerText = e.target.value;
+            saveSettings();
+        });
+
+        document.getElementById('autoReleaseDelay').addEventListener('input', function(e) {
+            document.getElementById('delayValue').innerText = e.target.value + 's';
+            saveSettings();
+        });
+
+        document.getElementById('reverseDirection').addEventListener('change', saveSettings);
+        document.getElementById('enableKnobPress').addEventListener('change', saveSettings);
+    </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "Name": "窗口切换",
+  "Description": "通过旋转旋钮使用任务视图 (Alt+Tab) 在打开的窗口之间导航",
+  "Category": "窗口管理",
+  "Actions": {
+    "windowcycle": {
+      "Name": "窗口切换",
+      "Tooltip": "旋转旋钮打开任务视图并在窗口之间导航"
+    }
+  }
+}

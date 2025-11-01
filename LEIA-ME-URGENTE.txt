@@ -1,0 +1,126 @@
+================================================================================
+                    PROBLEMA ENCONTRADO E SOLUCAO PRONTA!
+================================================================================
+
+PROBLEMA:
+---------
+O plugin aparece e recebe os eventos de rotacao do knob, MAS nao funciona
+porque a biblioteca "pynput" nao foi incluida na compilacao do executavel.
+
+ERRO NOS LOGS:
+--------------
+"[WindowCycle] Keyboard controller not available"
+
+Isso acontece porque o PyInstaller nao detectou automaticamente que precisa
+incluir o pynput.keyboard._win32 (modulo especifico do Windows).
+
+
+SOLUCAO:
+--------
+Executar o arquivo:
+
+    CORRIGIR-TUDO.bat
+
+Este script vai:
+1. Recompilar o WindowCycle.exe COM pynput incluido
+2. Reinstalar no StreamDock
+3. Reiniciar o StreamDock automaticamente
+
+Tempo estimado: 2-3 minutos
+
+
+COMO EXECUTAR:
+--------------
+
+1. Abra o Explorador de Arquivos
+2. Va para: d:\Projetos\Space Plugin\WindowCycle-Dev
+3. Duplo-clique em: CORRIGIR-TUDO.bat
+4. Aguarde a compilacao (2-3 minutos)
+5. Teste o plugin!
+
+
+COMO TESTAR:
+------------
+
+1. Aguarde o StreamDock inicializar
+2. Arraste "Window Cycle" para um knob
+3. Gire o knob
+4. Task View (Alt+Tab) deve abrir!
+5. Continue girando para navegar entre janelas
+6. Pare de girar para auto-selecionar (1.5s)
+
+
+VERIFICAR SE FUNCIONOU:
+-----------------------
+
+Execute:  view-logs.ps1
+
+Procure por:
+  ✓ "Opening Task View" = Funcionou!
+  ✓ "Navigating Task View" = Funcionou!
+  ✗ "Keyboard controller not available" = NAO deve aparecer!
+
+
+SE AINDA NAO FUNCIONAR:
+-----------------------
+
+1. Verifique se Python esta instalado:
+   python --version
+
+2. Verifique se pynput esta instalado:
+   pip show pynput
+
+3. Reinstale pynput:
+   pip install pynput
+
+4. Execute CORRIGIR-TUDO.bat novamente
+
+
+ARQUIVOS IMPORTANTES:
+---------------------
+
+CORRIGIR-TUDO.bat          -> Execute este para corrigir tudo!
+view-logs.ps1              -> Ver logs do plugin
+PROBLEMA-ENCONTRADO.md     -> Detalhes tecnicos completos
+build.bat                  -> Atualizado com hidden-imports
+
+
+O QUE FOI ALTERADO:
+-------------------
+
+Arquivo: build.bat
+Linha 30 - ANTES:
+  pyinstaller --onefile --windowed --name WindowCycle --add-data "src;src" main.py
+
+Linha 30 - DEPOIS:
+  pyinstaller --onefile --windowed --name WindowCycle --add-data "src;src"
+    --hidden-import=pynput
+    --hidden-import=pynput.keyboard
+    --hidden-import=pynput.keyboard._win32
+    --hidden-import=pynput.mouse
+    --hidden-import=pyautogui
+    main.py
+
+
+RESULTADO ESPERADO:
+-------------------
+
+Depois de executar CORRIGIR-TUDO.bat:
+
+1. ✓ Compilacao bem-sucedida (2-3 minutos)
+2. ✓ WindowCycle.exe maior (~9-10 MB em vez de 8.3 MB)
+3. ✓ Plugin reinstalado
+4. ✓ StreamDock reiniciado
+5. ✓ Girar knob abre Task View
+6. ✓ Navegacao entre janelas funciona!
+
+
+PROXIMA ACAO:
+-------------
+
+>>> EXECUTE: CORRIGIR-TUDO.bat <<<
+
+
+Data: 2025-11-01
+Status: PRONTO PARA CORRIGIR
+================================================================================

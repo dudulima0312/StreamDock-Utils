@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Clock Settings</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 13px;
+            background: #2D3142;
+            color: #D8D8D8;
+            margin: 0;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 300px;
+        }
+
+        .setting-group {
+            margin-bottom: 15px;
+            background: #3E4255;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #9CA0AA;
+        }
+
+        select, input[type="number"], input[type="color"], input[type="text"] {
+            width: 100%;
+            padding: 5px 8px;
+            background: #2D3142;
+            border: 1px solid #4A5066;
+            border-radius: 3px;
+            color: #D8D8D8;
+            font-size: 12px;
+        }
+
+        input[type="color"] {
+            height: 35px;
+            cursor: pointer;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #5865F2;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+
+        .info-text {
+            font-size: 11px;
+            color: #9CA0AA;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+
+        .color-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .color-box {
+            text-align: center;
+        }
+
+        .version-tag {
+            font-size: 10px;
+            color: #5865F2;
+            margin-left: 8px;
+            font-weight: normal;
+            background: #2D3142;
+            padding: 2px 6px;
+            border-radius: 3px;
+            border: 1px solid #5865F2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="setting-group">
+            <h3>
+                Display Mode
+                <span class="version-tag">v1.0-ENHANCED</span>
+            </h3>
+
+            <label for="mode">Mode:</label>
+            <select id="mode">
+                <option value="time">Time (HH:MM)</option>
+                <option value="hour">Hour Only (HH)</option>
+                <option value="minute">Minute Only (MM)</option>
+                <option value="date">Date (DD/MM)</option>
+                <option value="time_and_date">Time & Date (Two Lines)</option>
+                <option value="custom">Custom Format</option>
+            </select>
+
+            <div id="custom-format-container" style="margin-top: 10px; display: none;">
+                <label for="custom_format">Custom Format:</label>
+                <input type="text" id="custom_format" placeholder="HH:mm dd/MM">
+                <div class="info-text">Examples: HH:mm:ss, dd/MM/yyyy, HH:mm dd/MM<br>
+                Format codes: HH(24h) hh(12h) mm ss dd MM yyyy yy</div>
+            </div>
+
+            <div class="checkbox-group" style="margin-top: 10px;">
+                <input type="checkbox" id="use_12h">
+                <label for="use_12h">Use 12-hour format</label>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="show_am_pm_dot">
+                <label for="show_am_pm_dot">Show PM indicator (dot)</label>
+            </div>
+            <div class="info-text">Dot appears in top-right corner during PM hours only</div>
+        </div>
+
+        <div class="setting-group">
+            <h3>Font Settings</h3>
+
+            <label for="font_family">Font Family:</label>
+            <select id="font_family">
+                <option value="Doto">Doto (Modern)</option>
+                <option value="Sofia Sans">Sofia Sans (Condensed)</option>
+                <option value="Stint Ultra">Stint Ultra (Ultra Condensed)</option>
+                <option value="Coral Pixels">Coral Pixels (Pixel Art)</option>
+                <option value="Workbench">Workbench</option>
+                <option value="Numbers Claimcheck">Numbers Claimcheck</option>
+                <option value="Numbers Deuce">Numbers Deuce</option>
+                <option value="Numbers Greenback">Numbers Greenback</option>
+                <option value="Numbers Premium">Numbers Premium</option>
+                <option value="Numbers Redbird">Numbers Redbird</option>
+                <option value="Numbers Revenue">Numbers Revenue</option>
+                <option value="Numbers Valuta">Numbers Valuta Open</option>
+                <option value="Arial">Arial (System)</option>
+                <option value="Segoe UI">Segoe UI (System)</option>
+            </select>
+
+            <label for="font_size" style="margin-top: 10px;">Font Size:</label>
+            <input type="number" id="font_size" min="12" max="60" value="32">
+
+            <div class="checkbox-group" style="margin-top: 10px;">
+                <input type="checkbox" id="bold">
+                <label for="bold">Bold text</label>
+            </div>
+        </div>
+
+        <div class="setting-group">
+            <h3>Colors</h3>
+
+            <div class="color-row">
+                <div class="color-box">
+                    <label for="text_color">Text Color:</label>
+                    <input type="color" id="text_color" value="#FFFFFF">
+                </div>
+                <div class="color-box">
+                    <label for="bg_color">Background:</label>
+                    <input type="color" id="bg_color" value="#000000">
+                </div>
+            </div>
+
+            <label for="outline_width" style="margin-top: 15px;">Outline Width:</label>
+            <input type="number" id="outline_width" min="0" max="5" value="0">
+
+            <label for="outline_color" style="margin-top: 10px;">Outline Color:</label>
+            <input type="color" id="outline_color" value="#000000">
+
+            <div class="info-text">Set outline width to 0 to disable</div>
+        </div>
+
+        <div class="setting-group">
+            <h3>Position Offset</h3>
+
+            <label for="offset_x">Horizontal Offset:</label>
+            <input type="number" id="offset_x" min="-20" max="20" value="0">
+            <div class="info-text">Adjust horizontal position (-20 to +20)</div>
+
+            <label for="offset_y" style="margin-top: 10px;">Vertical Offset:</label>
+            <input type="number" id="offset_y" min="-20" max="20" value="0">
+            <div class="info-text">Adjust vertical position (-20 to +20)</div>
+        </div>
+
+        <div class="setting-group">
+            <h3>Webhook Trigger</h3>
+
+            <label for="click_webhook">Webhook URL (on click):</label>
+            <input type="text" id="click_webhook" placeholder="https://maker.ifttt.com/trigger/...">
+            <div class="info-text">Optional: Trigger webhook when clock is clicked</div>
+
+            <label for="webhook_timeout" style="margin-top: 10px;">Request Timeout (seconds):</label>
+            <input type="number" id="webhook_timeout" min="1" max="30" value="5">
+        </div>
+    </div>
+
+    <script>
+        // Connect to Stream Deck
+        var websocket = null;
+        var pluginUUID = null;
+        var settings = {};
+        var saveTimeout = null;
+
+        function connectElgatoStreamDeckSocket(inPort, inPluginUUID, inRegisterEvent, inInfo, inActionInfo) {
+            pluginUUID = inPluginUUID;
+
+            // Parse action info
+            if (inActionInfo) {
+                var actionInfo = JSON.parse(inActionInfo);
+                settings = actionInfo.payload.settings || {};
+                updateUI();
+            }
+
+            // Create WebSocket connection
+            websocket = new WebSocket('ws://127.0.0.1:' + inPort);
+
+            websocket.onopen = function() {
+                // Register property inspector
+                var json = {
+                    "event": inRegisterEvent,
+                    "uuid": inPluginUUID
+                };
+                websocket.send(JSON.stringify(json));
+
+                // Request settings
+                requestSettings();
+            };
+
+            websocket.onmessage = function(evt) {
+                var jsonObj = JSON.parse(evt.data);
+                var event = jsonObj.event;
+                var payload = jsonObj.payload || {};
+
+                if (event === 'sendToPropertyInspector') {
+                    settings = Object.assign(settings, payload);
+                    updateUI();
+                }
+            };
+        }
+
+        function updateUI() {
+            // Set default values if not present
+            settings.mode = settings.mode || 'time';
+            settings.font_family = settings.font_family || 'Roboto';
+            settings.font_size = settings.font_size || 32;
+            settings.text_color = settings.text_color || '#FFFFFF';
+            settings.bg_color = settings.bg_color || '#000000';
+            settings.outline_color = settings.outline_color || '#000000';
+            settings.outline_width = settings.outline_width || 0;
+            settings.bold = settings.bold || false;
+            settings.use_12h = settings.use_12h || false;
+            settings.offset_x = settings.offset_x || 0;
+            settings.offset_y = settings.offset_y || 0;
+            settings.custom_format = settings.custom_format || 'HH:mm';
+            settings.show_am_pm_dot = settings.show_am_pm_dot || false;
+            settings.click_webhook = settings.click_webhook || '';
+            settings.webhook_timeout = settings.webhook_timeout || 5;
+
+            // Update UI elements
+            document.getElementById('mode').value = settings.mode;
+            document.getElementById('font_family').value = settings.font_family;
+            document.getElementById('font_size').value = settings.font_size;
+            document.getElementById('text_color').value = settings.text_color;
+            document.getElementById('bg_color').value = settings.bg_color;
+            document.getElementById('outline_color').value = settings.outline_color;
+            document.getElementById('outline_width').value = settings.outline_width;
+            document.getElementById('bold').checked = settings.bold;
+            document.getElementById('use_12h').checked = settings.use_12h;
+            document.getElementById('offset_x').value = settings.offset_x;
+            document.getElementById('offset_y').value = settings.offset_y;
+            document.getElementById('custom_format').value = settings.custom_format;
+            document.getElementById('show_am_pm_dot').checked = settings.show_am_pm_dot;
+            document.getElementById('click_webhook').value = settings.click_webhook;
+            document.getElementById('webhook_timeout').value = settings.webhook_timeout;
+
+            // Show/hide custom format field
+            toggleCustomFormat();
+        }
+
+        function toggleCustomFormat() {
+            var mode = document.getElementById('mode').value;
+            var customContainer = document.getElementById('custom-format-container');
+            customContainer.style.display = (mode === 'custom') ? 'block' : 'none';
+        }
+
+        function saveSettings() {
+            // Clear existing timeout
+            if (saveTimeout) {
+                clearTimeout(saveTimeout);
+            }
+
+            // Debounce: wait 500ms before actually saving
+            saveTimeout = setTimeout(function() {
+                settings.mode = document.getElementById('mode').value;
+                settings.font_family = document.getElementById('font_family').value;
+                settings.font_size = parseInt(document.getElementById('font_size').value);
+                settings.text_color = document.getElementById('text_color').value;
+                settings.bg_color = document.getElementById('bg_color').value;
+                settings.outline_color = document.getElementById('outline_color').value;
+                settings.outline_width = parseInt(document.getElementById('outline_width').value);
+                settings.bold = document.getElementById('bold').checked;
+                settings.use_12h = document.getElementById('use_12h').checked;
+                settings.offset_x = parseInt(document.getElementById('offset_x').value);
+                settings.offset_y = parseInt(document.getElementById('offset_y').value);
+                settings.custom_format = document.getElementById('custom_format').value;
+                settings.show_am_pm_dot = document.getElementById('show_am_pm_dot').checked;
+                settings.click_webhook = document.getElementById('click_webhook').value;
+                settings.webhook_timeout = parseInt(document.getElementById('webhook_timeout').value);
+
+                if (websocket && websocket.readyState === WebSocket.OPEN) {
+                    var json = {
+                        "event": "setSettings",
+                        "context": pluginUUID,
+                        "payload": settings
+                    };
+                    websocket.send(JSON.stringify(json));
+                }
+            }, 500);
+        }
+
+        function requestSettings() {
+            if (websocket && websocket.readyState === WebSocket.OPEN) {
+                var json = {
+                    "event": "getSettings",
+                    "context": pluginUUID
+                };
+                websocket.send(JSON.stringify(json));
+            }
+        }
+
+        // Add event listeners
+        document.getElementById('mode').addEventListener('change', function() {
+            toggleCustomFormat();
+            saveSettings();
+        });
+        document.getElementById('font_family').addEventListener('change', saveSettings);
+        document.getElementById('font_size').addEventListener('input', saveSettings);
+        document.getElementById('text_color').addEventListener('input', saveSettings);
+        document.getElementById('bg_color').addEventListener('input', saveSettings);
+        document.getElementById('outline_color').addEventListener('input', saveSettings);
+        document.getElementById('outline_width').addEventListener('input', saveSettings);
+        document.getElementById('bold').addEventListener('change', saveSettings);
+        document.getElementById('use_12h').addEventListener('change', saveSettings);
+        document.getElementById('offset_x').addEventListener('input', saveSettings);
+        document.getElementById('offset_y').addEventListener('input', saveSettings);
+        document.getElementById('custom_format').addEventListener('input', saveSettings);
+        document.getElementById('show_am_pm_dot').addEventListener('change', saveSettings);
+        document.getElementById('click_webhook').addEventListener('input', saveSettings);
+        document.getElementById('webhook_timeout').addEventListener('input', saveSettings);
+
+        // Force reload indicator
+        console.log('[Clock v1.0-ENHANCED] Property Inspector loaded successfully with all new features!');
+    </script>
+</body>
+</html>
