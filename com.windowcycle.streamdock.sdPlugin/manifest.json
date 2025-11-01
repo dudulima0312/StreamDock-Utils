@@ -1,12 +1,12 @@
 {
-  "Category": "Dudu Lima System",
+  "Category": "System Tools",
   "CategoryIcon": "static/img/category-icon",
   "Actions": [
     {
       "UUID": "com.windowcycle.streamdock.windowcycle",
       "Icon": "static/img/window-icon",
       "Name": "Window Cycle",
-      "Tooltip": "Cycle through open windows with Task View",
+      "Tooltip": "Navigate through open windows with Task View (Alt+Tab) using knob rotation",
       "States": [
         {
           "Image": "static/img/window-icon"
@@ -18,8 +18,8 @@
     {
       "UUID": "com.windowcycle.streamdock.clock",
       "Icon": "static/img/clock-icon",
-      "Name": "Clock",
-      "Tooltip": "Customizable clock display",
+      "Name": "Clock Enhanced",
+      "Tooltip": "Advanced customizable clock with 13 fonts, custom formats, webhooks and more",
       "States": [
         {
           "Image": "static/img/clock-icon"
@@ -32,7 +32,7 @@
       "UUID": "com.windowcycle.streamdock.webhook_knob",
       "Icon": "static/img/webhook-icon",
       "Name": "Webhook Knob",
-      "Tooltip": "Trigger webhooks on knob rotation and press",
+      "Tooltip": "Trigger up to 3 different webhooks with knob rotation and press actions",
       "States": [
         {
           "Image": "static/img/webhook-icon"
@@ -44,13 +44,13 @@
   ],
   "SDKVersion": 1,
   "Author": "Dudu Lima",
-  "Description": "Navigate through open windows using Task View (Alt+Tab) with knob rotation",
-  "Name": "Window Cycle",
-  "Icon": "static/img/window-icon",
+  "Description": "Multi-functional plugin with Window Cycle (Alt+Tab navigation), Advanced Clock (13 fonts, webhook integration), and Webhook Knob (3 webhook triggers). Perfect for productivity and automation!",
+  "Name": "WindowCycle Utils",
+  "Icon": "static/img/category-icon",
   "CodePath": "WindowCycle.exe",
   "CodePathWin": "WindowCycle.exe",
-  "URL": "https://github.com/dudulima/windowcycle",
-  "Version": "1.1.0",
+  "URL": "https://github.com/dudulima0312/StreamDock-Utils",
+  "Version": "1.0.0",
   "OS": [
     {
       "Platform": "windows",
@@ -58,6 +58,6 @@
     }
   ],
   "Software": {
-    "MinimumVersion": "2.9"
+    "MinimumVersion": "2.0"
   }
 }
